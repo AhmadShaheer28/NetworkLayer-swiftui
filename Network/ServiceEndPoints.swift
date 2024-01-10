@@ -24,14 +24,14 @@ enum ServiceEndPoints {
         return .staging
     }
     
-    func createRequest(params: [String: String] = [:]) -> NetworkRequest {
-        var headers: Headers = [:]
+    func createRequest(params: [String: String] = [:], kHeaders: Headers = [:], body: Encodable? = nil) -> NetworkRequest {
+        var headers: Headers = kHeaders
         headers["Content-Type"] = "application/json"
         
         var url = getURL(from: environment)
         if !params.isEmpty { url = appendParams(url: url, params: params) }
         
-        return NetworkRequest(url: url, headers: headers, httpMethod: httpMethod)
+        return NetworkRequest(url: url, headers: headers, reqBody: body, httpMethod: httpMethod)
     }
     
     
